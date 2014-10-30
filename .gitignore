@@ -4,3 +4,5 @@ local.properties
 .idea/
 lint.xml
 /.apt_generated
+.DS_Store
+

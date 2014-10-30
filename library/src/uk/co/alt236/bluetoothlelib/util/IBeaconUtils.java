@@ -2,6 +2,7 @@ package uk.co.alt236.bluetoothlelib.util;
 
 import uk.co.alt236.bluetoothlelib.device.BluetoothLeDevice;
 import uk.co.alt236.bluetoothlelib.device.adrecord.AdRecord;
+import uk.co.alt236.bluetoothlelib.resolvers.CompanyIdentifierResolver;
 
 public class IBeaconUtils {
 	private static final double DISTANCE_THRESHOLD_WTF = 0.0;
@@ -73,6 +74,16 @@ public class IBeaconUtils {
 		// An iBeacon record must be at least 25 chars long
 		if(!(manufacturerData.length >= 25)){return false;}
 
+    { // for NORDIC nRF51822 Smart Beacon Kit
+      int compaayId = (0xFF & manufacturerData[1]) * 256 + (0xFF & manufacturerData[0]);
+
+      if (true && CompanyIdentifierResolver.getCompanyName(compaayId, null) != null
+          && manufacturerData[2] == MANUFACTURER_DATA_IBEACON_PREFIX[2]
+          && manufacturerData[3] == MANUFACTURER_DATA_IBEACON_PREFIX[3]) {
+        return true;
+      }
+    }
+		
 		if(ByteUtils.doesArrayBeginWith(manufacturerData, MANUFACTURER_DATA_IBEACON_PREFIX)){
 			return true;
 		}

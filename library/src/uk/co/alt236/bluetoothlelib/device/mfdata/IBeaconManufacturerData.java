@@ -134,8 +134,11 @@ public final class IBeaconManufacturerData {
 			if(i == 8){sb.append('-');}
 			if(i == 10){sb.append('-');}
 
-			sb.append(
-					Integer.toHexString(ByteUtils.getIntFromByte(uuid[i])));
+			String hexString = Integer.toHexString(ByteUtils.getIntFromByte(uuid[i]));
+			if (hexString.length()==1) {
+			  sb.append('0');
+			}
+      sb.append(hexString);
 		}
 
 

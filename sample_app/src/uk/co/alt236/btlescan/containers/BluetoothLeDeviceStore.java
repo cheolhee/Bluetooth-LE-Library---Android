@@ -77,7 +77,19 @@ public class BluetoothLeDeviceStore {
 
 			@Override
 			public int compare(BluetoothLeDevice arg0, BluetoothLeDevice arg1) {
-				return arg0.getAddress().compareToIgnoreCase(arg1.getAddress());
+        /* Sort by AVG. RSSI DESC */      
+        double r0 = arg0.getRunningAverageRssi();
+        double r1 = arg1.getRunningAverageRssi();
+        if (r0>r1) return -1;
+        if (r0<r1) return 1;
+        
+        double d = arg0.getTimestamp() - arg1.getTimestamp();
+        if (d > 0) return 1;
+        if (d < 0) return -1;
+        
+        return 0;			  
+			  
+//				return arg0.getAddress().compareToIgnoreCase(arg1.getAddress());
 			}
 		});
 
